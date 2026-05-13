@@ -1,6 +1,6 @@
 #!/bin/bash
 path="$HOME/.local/share/motif/"
-if [[ ! -e path ]]; then
+if [[ ! -e $path ]]; then
 	mkdir -p $path
 fi
 if [[ $1 == -* ]]; then 
@@ -40,12 +40,8 @@ else
 	file=$2
 	if [[ -e "$path$name" ]]; then
 		dir=$(pwd)
-		case $name in
-			latex) 
-				cp "$path$name" "$dir/$file"
-				echo "$name --> $file file created"
-				;;
-		esac
+			cp "$path$name" "$dir/$file"
+			echo "$name --> $file file created"
 	else
 		echo "motif not found in library"
 	fi
