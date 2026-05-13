@@ -1,0 +1,52 @@
+#!/bin/bash
+path="$HOME/.local/share/motif/"
+if [[ ! -e path ]]; then
+	mkdir -p $path
+fi
+if [[ $1 == -* ]]; then 
+	
+	case $1 in
+		-n) name=$2
+			file=$3
+			if [[ -e "$path$name" ]]; then
+				read -p "motif $name already exists, overwrite? [y/n]: " ans
+				if [[ $ans == y ]]; then
+					cp "$file" "$path$name"
+					echo "$name <-- $file edited"
+				else
+					echo "aborted"
+				fi
+			else
+				cp "$file" "$path$name"
+				echo "$name <-- $file added in library"
+			fi
+			;;
+		-r) 
+			name=$2
+			if [[ -e "$path$name" ]]; then
+				rm "$path$name"
+				echo "motif $name motif removed from library"
+			else
+				echo "motif $name not found"
+			fi
+			;;
+		-l) ls $path
+			;;
+		*) echo "flag not recognized"
+	esac
+		
+else
+	name=$1
+	file=$2
+	if [[ -e "$path$name" ]]; then
+		dir=$(pwd)
+		case $name in
+			latex) 
+				cp "$path$name" "$dir/$file"
+				echo "$name --> $file file created"
+				;;
+		esac
+	else
+		echo "motif not found in library"
+	fi
+fi
